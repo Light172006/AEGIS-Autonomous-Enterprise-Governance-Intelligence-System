@@ -65,4 +65,3 @@ answer = RagPipeline().ask("What is the normal discharge pressure of P-102?")
 ```
 
 The returned object includes the answer, status, citations, and retrieved evidence.
-
