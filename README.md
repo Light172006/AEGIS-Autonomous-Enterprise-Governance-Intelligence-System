@@ -1,3 +1,80 @@
+# AEGIS RAG Component
+
+# AEGIS — Sovereign On-Premise Agentic AI Workbench
+
+AEGIS is a Sovereign On-Premise Agentic AI Workbench. This repository currently
+contains the RAG component for the first P-102 manual milestone, plus a
+**Document Agent** and an **Orchestrator** that routes goals to it using
+Qwen3's native tool-calling.
+
+````text
+Engineer → Goal → Orchestrator → [Document Agent | Vision Agent | Data Agent]
+                       ↓
+                Evidence Verification → Decision → Safety Guard
+## Scope
+
+The current pipeline supports:
+
+- PDF text extraction
+- text cleaning
+- section-aware chunking
+- local embeddings
+- local Chroma vector storage
+- semantic retrieval with metadata
+- grounded answer generation through a configurable LLM provider
+
+It does not include the frontend, backend API, authentication, application database, Vision Agent, Data Agent, or Orchestrator.
+
+## Setup
+
+Place the P-102 PDF in:
+
+```text
+data/
+````
+
+The filename should contain `P-102` or `P102`.
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Create a local `.env` from `.env.example` and set `OPENROUTER_API_KEY` if using OpenRouter for generation.
+
+## Ingest
+
+```bash
+python scripts/ingest_p102.py
+```
+
+## Ask
+
+```bash
+python scripts/ask_rag.py "What is the normal discharge pressure of P-102?"
+```
+
+Expected grounded answer after the manual is ingested:
+
+```text
+The normal discharge pressure of P-102 is 3.5-4.2 bar.
+```
+
+The source should cite the P-102 manual section containing the technical specifications.
+
+## Backend Integration
+
+The backend can later call:
+
+```python
+from rag.pipeline import RagPipeline
+
+answer = RagPipeline().ask("What is the normal discharge pressure of P-102?")
+```
+
+The returned object includes the answer, status, citations, and retrieved evidence.
+
 # AEGIS — Sovereign On-Premise Agentic AI Workbench
 
 AEGIS is a Sovereign On-Premise Agentic AI Workbench. This repository currently
@@ -125,12 +202,12 @@ were called with what task, and whether a human needs to sign off.
 
 This layer doesn't replace the RAG pipeline above — it's the same retrieval,
 chunking, and grounded generation, just made callable by something that can
-decide *when* to call it.
+decide _when_ to call it.
 
 ### Why an Orchestrator on top of the RAG pipeline?
 
 The RAG pipeline alone can only do one thing: answer a question from
-documents. The Orchestrator's job is to decide *whether* that's even the
+documents. The Orchestrator's job is to decide _whether_ that's even the
 right tool for a given goal, using Qwen3's tool-calling to make that decision
 instead of hardcoding "always call the Document Agent." With one agent
 registered this looks almost trivial — but it's the seam where a second and
@@ -216,7 +293,7 @@ agent-agnostic already.
 ### What this does not do yet
 
 - No Action Agent, Workflow Engine, or Simulated Environment — the
-  Orchestrator currently only ever *investigates*, it never takes an action.
+  Orchestrator currently only ever _investigates_, it never takes an action.
   `SafetyGuard` is written to grow into gating actions once one exists.
 - `Orchestrator._compose_answer` is a simple pass-through with one agent.
   Once a second agent exists, this is the point to reconcile conflicting
