@@ -8,6 +8,14 @@ from rag.llm.base import LlmProvider
 
 def build_llm_provider(config: RagConfig) -> LlmProvider:
     provider = config.llm_provider.lower().strip()
+    if provider == "ollama":
+        from rag.llm.ollama_provider import OllamaProvider
+
+        return OllamaProvider(
+            model=config.ollama_model,
+            base_url=config.ollama_base_url,
+        )
+
     if provider == "openrouter":
         from rag.llm.openrouter_provider import OpenRouterProvider
 
@@ -19,5 +27,5 @@ def build_llm_provider(config: RagConfig) -> LlmProvider:
 
     raise ValueError(
         f"Unsupported LLM provider: {config.llm_provider}. "
-        "Supported providers currently: openrouter."
+        "Supported providers: ollama, openrouter."
     )

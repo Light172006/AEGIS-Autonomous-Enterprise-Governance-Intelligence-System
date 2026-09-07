@@ -16,10 +16,12 @@ class RagConfig:
     vector_db_dir: Path = PROJECT_ROOT / "vector_db" / "chroma"
     collection_name: str = "aegis_p102"
     embedding_model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
-    llm_provider: str = "openrouter"
+    llm_provider: str = "ollama"
     llm_model: str = "openai/gpt-4o-mini"
     openrouter_api_key: str | None = None
     openrouter_base_url: str = "https://openrouter.ai/api/v1/chat/completions"
+    ollama_model: str = ""
+    ollama_base_url: str = "http://localhost:11434"
 
     @classmethod
     def from_env(cls) -> "RagConfig":
@@ -38,13 +40,18 @@ class RagConfig:
                 "AEGIS_EMBEDDING_MODEL",
                 "sentence-transformers/all-MiniLM-L6-v2",
             ),
-            llm_provider=os.getenv("AEGIS_LLM_PROVIDER", "openrouter"),
+            llm_provider=os.getenv(
+                "AEGIS_LLM_PROVIDER",
+                os.getenv("LLM_PROVIDER", "ollama"),
+            ),
             llm_model=os.getenv("AEGIS_LLM_MODEL", "openai/gpt-4o-mini"),
             openrouter_api_key=os.getenv("OPENROUTER_API_KEY"),
             openrouter_base_url=os.getenv(
                 "OPENROUTER_BASE_URL",
                 "https://openrouter.ai/api/v1/chat/completions",
             ),
+            ollama_model=os.getenv("OLLAMA_MODEL", ""),
+            ollama_base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
         )
 
 

@@ -32,7 +32,25 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Create a local `.env` from `.env.example` and set `OPENROUTER_API_KEY` if using OpenRouter for generation.
+Create a local `.env` from `.env.example`. The default provider is Ollama, which is the local model runtime. Set
+`OLLAMA_BASE_URL` and `OLLAMA_MODEL` to the Ollama endpoint and the Qwen model tag available on the machine.
+OpenRouter remains an optional development provider; select it with `AEGIS_LLM_PROVIDER=openrouter` and set
+`OPENROUTER_API_KEY`.
+
+## Local LLM Configuration
+
+Ollama serves the local Qwen model through its local HTTP API. The RAG pipeline sends the grounded prompt, including
+only retrieved evidence, to the selected provider. The provider does not perform retrieval.
+
+Example local configuration:
+
+```text
+AEGIS_LLM_PROVIDER=ollama
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=qwen2.5:7b
+```
+
+The model tag is configurable and is only an example; use the Qwen tag installed in the local Ollama runtime.
 
 ## Ingest
 
