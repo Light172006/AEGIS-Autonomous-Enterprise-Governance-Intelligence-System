@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+/* ─── AEGIS Calm Enterprise Design System ─── */
+@theme {
+  --color-aegis-bg: #F7F5F0;
+  --color-aegis-surface: #FFFFFF;
+  --color-aegis-surface-subtle: #FDFCF9;
+  --color-aegis-surface-hover: #F2EFE9;
+  --color-aegis-border: #E5E1D8;
+  --color-aegis-border-subtle: #ECE9E2;
+  --color-aegis-text: #1F1D1A;
+  --color-aegis-text-secondary: #6B655D;
+  --color-aegis-text-muted: #968F85;
+  --color-aegis-accent: #785233;
+  --color-aegis-accent-hover: #634329;
+  --color-aegis-highlight: #B88B5D;
+  --color-aegis-success: #166534;
+  --color-aegis-warning: #9A3412;
+  --color-aegis-danger: #991B1B;
+  --color-aegis-sidebar: #F2EFE9;
+
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* ─── Base Styles ─── */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #F7F5F0;
+  color: #1F1D1A;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}
+
+/* ─── Minimal Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D9D4CB;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #BFB8AC;
+}
+
+/* ─── Clean Focus States ─── */
+*:focus-visible {
+  outline: 2px solid #785233;
+  outline-offset: 1px;
+}
+
+/* ─── Enterprise Cards & Containers ─── */
+.aegis-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E1D8;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.aegis-card-hover {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.aegis-card-hover:hover {
+  border-color: #D1CBC0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* ─── Chat Bubbles ─── */
+.chat-bubble-user {
+  background: #24211D;
+  color: #FDFCF9;
+  border-radius: 12px 12px 2px 12px;
+}
+
+.chat-bubble-assistant {
+  background: #FFFFFF;
+  color: #1F1D1A;
+  border: 1px solid #E5E1D8;
+  border-radius: 12px 12px 12px 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+/* ─── Upload Zone ─── */
+.upload-zone {
+  border: 1.5px dashed #D4CEC3;
+  background: #FDFCF9;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.upload-zone:hover,
+.upload-zone.drag-active {
+  border-color: #785233;
+  background: #F4EFE7;
+}
+
+/* ─── Clean Animation ─── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─── Modal Entrance ─── */
+@keyframes slideInBottom {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-slide-in-bottom {
+  animation: slideInBottom 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─── Live Pulse Indicator ─── */
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-pulse-dot {
+  animation: pulseDot 2s ease-in-out infinite;
+}
